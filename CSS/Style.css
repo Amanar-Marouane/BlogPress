@@ -5,6 +5,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body {
     overflow: hidden;
 }
 
@@ -256,7 +259,10 @@ main {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(./../media/starsBack.jpg) no-repeat;
     background-size: cover;
     color: #fff;
-    overflow-y: auto;
+}
+
+.HomeBody {
+    overflow-y: visible;
 }
 
 main h1 {
@@ -274,4 +280,119 @@ main p {
 
 a {
     text-decoration: none;
+}
+
+.post {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.user_p {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.user_name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.user_name svg {
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: #f4f4f4;
+}
+
+.user_name p {
+    font-weight: bold;
+    font-size: 1em;
+    margin: 0;
+    color: #000;
+}
+
+.post_date p {
+    font-size: 0.8em;
+    color: #777;
+    margin: 0;
+}
+
+.title h2 {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #333;
+}
+
+.description p {
+    font-size: 1em;
+    color: #555;
+    margin: 10px 0;
+}
+
+.p_img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    margin-top: 1em;
+}
+
+.p_img img {
+    max-width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.st {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.st>div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.st>div:hover {
+    color: #007bff;
+}
+
+.st svg {
+    fill: #555;
+    transition: fill 0.3s;
+}
+
+.st:hover svg {
+    fill: #007bff;
+}
+
+.st h6 {
+    font-size: 0.9em;
+    margin: 0;
+}
+
+.user_name path {
+    fill: #555;
+}
+
+li {
+    list-style: none;
 }
