@@ -7,27 +7,17 @@
     <title>Home</title>
     <link rel="stylesheet" href="./../CSS/Style.css">
 </head>
+<?php
+session_start();
+if ($_SESSION['loged_user_id']) {
+    include_once './header.php';
+}
+?>
 
 <body class="HomeBody">
-    <header class="header">
-        <nav class="nav">
-            <a href=""><img src="./../media/logo.svg" class="logo" alt="Logo"></a>
-            <ul>
-                <li><a href="">Your Profile</a></li>
-                <li><a href="">Home</a></li>
-                <li><a href="">DashBoard</a></li>
-                <li><a href="">Create</a></li>
-            </ul>
-        </nav>
-    </header>
     <main>
-        <h1>Welcome, Mr. <span>Maouane</span></h1>
-        <p>This is the main content area. Add your dashboard elements here.</p>
         <?php
-        session_start();
-        header("Cache-Control: no-cache, must-revalidate");
-        header("Pragma: no-cache");
-        header("Expires: 0");
+        $posts = [];
         $conn = new mysqli("localhost", "root", "analikayn", "blogpress");
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
@@ -38,6 +28,7 @@
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $author_id = $row['author_id'];
+                $article_id = $row['article_id'];
                 $post_date = $row['created_at'];
                 $title = $row['title'];
                 $description = $row['arti_desc'];
@@ -74,15 +65,17 @@
                                     <p>$post_date</p>
                                 </div>
                             </div>
-                            <div class='title'>
+                            <a href='./article_page.php?article_id=$article_id' class='showPost'>
+                                <div class='title'>
                                 <h2>$title</h2>
-                            </div>
-                            <div class='description'>
-                                <p>$description</p>
-                            </div>
-                            <div class='p_img'>
-                                <img src='$img_src' alt=''>
-                            </div>
+                                </div>
+                                <div class='description'>
+                                    <p>$description</p>
+                                </div>
+                                <div class='p_img'>
+                                    <img src='$img_src' alt=''>
+                                </div>
+                            </a>
                             <div class='st'>
                                 <div class='likes'>
                                     <svg width='30px' height='30px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -123,6 +116,6 @@
         }
         ?>
     </main>
-</body>
+    <?php include './footer.php' ?>
 
 </html>

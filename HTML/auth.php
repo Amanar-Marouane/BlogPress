@@ -14,9 +14,9 @@
         <h3 class="errorMsg">
             <?php
             session_start();
-            header("Cache-Control: no-cache, must-revalidate");
-            header("Pragma: no-cache");
-            header("Expires: 0");
+            if ($_SESSION['loged_user_id']) {
+                header('Location: ./home.php');
+            }
             $passwordToVerify = null;
             if (isset($_POST['signup'])) {
                 if (empty($_POST['user_name']) || empty($_POST['email']) || empty($_POST['password'])) {
@@ -33,6 +33,8 @@
                                         let p1 = document.querySelector('.p1');
                                         let p2 = document.querySelector('.p2');
                                         let back = document.querySelector('.back');
+                                        let logBtns = document.querySelector('.logBtns');
+                                        logBtns.style.display = 'none';
                                         p1.style.height = '0%';
                                         p2.style.height = '100%';
                                         signUpForm.style.display = 'flex';
@@ -50,7 +52,7 @@
                         signUpForm($user_name, $GLOBALS['email'], $password);
                     } else {
                         if (!preg_match('/^[a-zA-Z 0-9]+$/', $user_name)) {
-                            echo "The user name should only include [a-zA-Z]";
+                            echo "The user name should only include [a-zA-Z0-9]";
                             signUpForm($user_name, $GLOBALS['email'], $password);
                         } else {
                             if (
@@ -77,7 +79,7 @@
                                         echo "This user name already in use!";
                                         signUpForm($user_name, $GLOBALS['email'], $password);
                                     } else {
-                                        $sql = 'INSERT INTO users (user_name, gmail, user_password, creation_date) VALUES ("' . $user_name . '", "' . $email . '", "' . $hashedPassword . '", CURRENT_TIMESTAMP());';
+                                        $sql = 'INSERT INTO users (user_name, gmail, user_password) VALUES ("' . $user_name . '", "' . $email . '", "' . $hashedPassword . '");';
                                         $result = $conn->query($sql);
                                         header('Location: https://www.google.com/');
                                         exit();
@@ -103,6 +105,8 @@
                                     let p1 = document.querySelector('.p1');
                                     let p2 = document.querySelector('.p2');
                                     let back = document.querySelector('.back');
+                                    let logBtns = document.querySelector('.logBtns');
+                                    logBtns.style.display = 'none';
                                     p1.style.height = '0%';
                                     p2.style.height = '100%';
                                     logInForm.style.display = 'flex'
@@ -123,16 +127,17 @@
                             die("Connection failed: " . $conn->connect_error);
                         }
                         echo '<script>console.log("Connected successfully for log in")</script>';
-                        $sql = "SELECT user_password from users WHERE gmail = '$logEmail';";
+                        $sql = "SELECT user_password, user_id from users WHERE gmail = '$logEmail';";
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 $GLOBALS['passwordToVerify'] = htmlspecialchars($row['user_password']);
+                                $_SESSION['loged_user_id'] = $row['user_id'];
                             }
                         }
                         if (password_verify($logPassword, $GLOBALS['passwordToVerify'])) {
                             echo "Sign In Done Successfully";
-                            header('Location: https://www.google.com/');
+                            header('Location: ./home.php');
                             exit();
                         } else {
                             echo "Check your email adress or password.";
@@ -179,7 +184,7 @@
             <div class="logBtns">
                 <button class="btn signUp transi">Sign Up</button>
                 <button class="btn logIn transi">Log In</button>
-                <button class="btn visit">I'm just a visitor</button>
+                <button class="btn visit"><a href="./home.php">I'm just a visitor</a></button>
             </div>
         </div>
     </section>
