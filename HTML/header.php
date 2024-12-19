@@ -1,11 +1,10 @@
     <header class="header">
         <nav class="nav">
-            <a href=""><img src="./../media/logo.svg" class="logo pagelogo" alt="Logo"></a>
+            <a href="./home.php"><img src="./../media/logo.svg" class="logo pagelogo" alt="Logo"></a>
             <ul>
-                <li><a href="">Your Profile</a></li>
-                <li><a href="">Home</a></li>
+                <li><a href="./home.php">Home</a></li>
                 <li><a href="">DashBoard</a></li>
-                <li><a href="">Disconnection</a></li>
+                <li><a href="./disconnection.php">Disconnection</a></li>
             </ul>
         </nav>
     </header>

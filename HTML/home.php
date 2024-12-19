@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="./../CSS/Style.css">
+    <script defer src="./../JS/script.js"></script>
 </head>
 <?php
 session_start();
-if ($_SESSION['loged_user_id']) {
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+if (isset($_SESSION['loged_user_id'])) {
     include_once './header.php';
 }
+
 ?>
 
 <body class="HomeBody">
@@ -36,7 +40,7 @@ if ($_SESSION['loged_user_id']) {
                 $likes = $row['likes_number'];
                 $views = $row['views_number'];
                 /*-----------------------------------------------------------------------------------------------------------------*/
-                $sql = "SELECT COUNT(*) AS the_number FROM comments WHERE $author_id = comments.user_id;";
+                $sql = "SELECT COUNT(*) AS the_number FROM comments WHERE $article_id = comments.article_id;";
                 $total_comments = $conn->query($sql);
                 if ($total_comments->num_rows > 0) {
                     while ($row = $total_comments->fetch_assoc()) {
@@ -116,6 +120,6 @@ if ($_SESSION['loged_user_id']) {
         }
         ?>
     </main>
-    <?php include './footer.php' ?>
+    <?php include_once './footer.php' ?>
 
 </html>

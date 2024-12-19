@@ -14,7 +14,7 @@ $conn = new mysqli("localhost", "root", "analikayn", "blogpress");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-if ($_SESSION['loged_user_id']) {
+if (isset($_SESSION['loged_user_id'])) {
     include_once './header.php';
     echo "<script>
             document.addEventListener('DOMContentLoaded', function(){
@@ -47,7 +47,6 @@ if ($result->num_rows > 0) {
                     <?php
                     if (isset($_POST['comment_submit'])) {
                         $GLOBALS['user_name_comment'] = $GLOBALS['user_name_comment'] ?? htmlspecialchars($_POST['user_name_comment']);
-                        echo"<script>console.log('{$GLOBALS['user_name_comment']}')</script>";
                         if (is_null($GLOBALS['user_name_comment']) || empty($_POST['comment_text'])) {
                             echo "All the inputs should be filled.";
                         } else {
@@ -55,8 +54,14 @@ if ($result->num_rows > 0) {
                             if (!preg_match('/^[a-zA-Z 0-9]+$/', $GLOBALS['user_name_comment'])) {
                                 echo "The user name should only include [a-zA-Z0-9]";
                             } else {
+                                $user_id = $_SESSION['loged_user_id'] ?? null;
+                                echo "<script>console.log('$user_id')</script>";
                                 $comment_text = $GLOBALS['comment_text'];
-                                $sql = "INSERT INTO comments (article_id, user_name, comment_desc) VALUE ($article_id, '{$GLOBALS['user_name_comment']}', '$comment_text');";
+                                if ($user_id == null) {
+                                    $sql = "INSERT INTO comments (article_id, user_name, comment_desc) VALUE ($article_id, '{$GLOBALS['user_name_comment']}', '$comment_text');";
+                                } else {
+                                    $sql = "INSERT INTO comments (user_id, article_id, user_name, comment_desc) VALUE ($user_id, $article_id, '{$GLOBALS['user_name_comment']}', '$comment_text');";
+                                }
                                 $result5 = $conn->query($sql);
                                 header("Location: " . $_SERVER["PHP_SELF"] . "?article_id=" . urlencode($article_id));
                             }
@@ -134,7 +139,7 @@ if ($result->num_rows > 0) {
                     </form>
                 </section>
             </main>
-            <?php include './footer.php' ?>
+            <?php include_once './footer.php' ?>
 
 </html>
 <?php

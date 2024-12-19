@@ -14,7 +14,7 @@
         <h3 class="errorMsg">
             <?php
             session_start();
-            if ($_SESSION['loged_user_id']) {
+            if (isset($_SESSION['loged_user_id'])) {
                 header('Location: ./home.php');
             }
             $passwordToVerify = null;

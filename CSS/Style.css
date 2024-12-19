@@ -5,6 +5,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
 }
 
 body {
@@ -576,4 +577,84 @@ li {
 
 .com_header {
     margin-top: 5px;
+}
+
+/* ---------------------------------------------- */
+
+nav {
+    background-color: #1e293b;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    font-size: 18px;
+}
+
+.dashboard {
+    padding: 20px;
+}
+
+.overview {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat h3 {
+    font-size: 18px;
+}
+
+.stat p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.posts {
+    margin-top: 20px;
+}
+
+.post {
+    
+    padding: 15px;
+    margin: 10px 0;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.post h4 {
+    font-size: 20px;
+}
+
+.post-stats p {
+    font-size: 14px;
+    color: #555;
+}
+
+.actions button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.actions button:hover {
+    background-color: #0056b3;
 }

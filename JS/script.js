@@ -4,6 +4,41 @@ document.addEventListener("DOMContentLoaded", function () {
         if (existing_comments.length > 1) {
             existing_comments[existing_comments.length - 1].style.display = "none";
         }
+    } else if (window.location.href.includes("http://localhost/BlogPress/HTML/home.php")) {
+        let likes = document.querySelectorAll(".likes");
+        likes.forEach(e => {
+            e.addEventListener("click", () => {
+                const url = e.parentElement.parentElement.querySelector("a").href;
+                const urlObject = new URL(url);
+                const articleId = urlObject.searchParams.get("article_id");
+
+                if (e.querySelector("svg path").style.fill === "rgb(0, 123, 255)") {
+                    e.querySelector("svg path").style.fill = "rgb(85, 85, 85)";
+                    e.querySelector("h6").innerHTML = Number(e.querySelector("h6").innerHTML) - 1;
+                    updateLikes(articleId, false);
+                } else {
+                    e.querySelector("svg path").style.fill = "rgb(0, 123, 255)";
+                    e.querySelector("h6").innerHTML = Number(e.querySelector("h6").innerHTML) + 1;
+                    updateLikes(articleId, true);
+                }
+            })
+        })
+        function updateLikes(articleId, bool) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        console.log('Likes updated successfully');
+                    } else {
+                        console.error('Error updating likes');
+                    }
+                }
+            };
+
+            xhttp.open("POST", "./../HTML/likes.php", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.send(JSON.stringify({ "articleId": articleId, status: bool }));
+        }
     }
     else {
         let transi = document.querySelectorAll(".transi");
