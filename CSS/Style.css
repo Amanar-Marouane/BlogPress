@@ -29,7 +29,7 @@ body {
 .btn {
     font-size: 20px;
     padding: 0.7em 2em;
-    border-radius: 25px;
+    border-radius: 15px;
     background: linear-gradient(90deg, #6a11cb, #2575fc);
     color: #fff;
     border: none;
@@ -579,24 +579,22 @@ li {
     margin-top: 5px;
 }
 
-/* ---------------------------------------------- */
-
-nav {
+.dashboardNav {
     background-color: #1e293b;
     padding: 10px;
 }
 
-nav ul {
+.dashboardNav ul {
     list-style: none;
     display: flex;
     justify-content: center;
 }
 
-nav ul li {
+.dashboardNav ul li {
     margin: 0 20px;
 }
 
-nav ul li a {
+.dashboardNav ul li a {
     color: white;
     font-size: 18px;
 }
@@ -608,7 +606,11 @@ nav ul li a {
 .overview {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+    background-color: #d9d9d9;
+    padding: 1rem;
+    border-radius: 5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .stat {
@@ -624,37 +626,120 @@ nav ul li a {
     font-weight: bold;
 }
 
-.posts {
-    margin-top: 20px;
+.arties {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    border: 1px solid;
+    align-items: center;
+    border-radius: 5px;
+    text-align: center;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 
-.post {
-    
+.arties h3 {
+    width: 100%;
+    text-align: center;
+    background-color: #d9d9d9;
+    padding: .5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.arties a {
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.arti {
+    min-width: 600px;
     padding: 15px;
-    margin: 10px 0;
-    background: #f9f9f9;
+    background: #eeecec;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    row-gap: .8em;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
 }
 
-.post h4 {
+.arti img {
+    width: 300px;
+    height: fit-content;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.arti h4 {
     font-size: 20px;
 }
 
-.post-stats p {
+.arti-stats p {
     font-size: 14px;
     color: #555;
+    font-weight: bold;
 }
 
 .actions button {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
+    scale: 0.95;
 }
 
-.actions button:hover {
-    background-color: #0056b3;
+.articleFormBody {
+    color: #333;
+    padding: 2em;
+    text-align: center;
+}
+
+.create-article {
+    max-width: 600px;
+    margin: 2em auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5em;
+}
+
+.article-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
+
+.article-form .form-group {
+    margin-bottom: 1em;
+}
+
+.article-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #000;
+}
+
+.article-form input,
+.article-form textarea {
+    width: 100%;
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.article-form input:focus,
+.article-form textarea:focus {
+    outline: none;
+    border-color: #FFD700;
+    box-shadow: 0 0 4px rgba(255, 215, 0, 0.5);
+}
+
+.article-form button:hover {
+    background-color: #2b145a;
+    transform: scale(0.95);
 }

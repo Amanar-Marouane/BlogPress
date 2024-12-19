@@ -81,7 +81,7 @@
                                     } else {
                                         $sql = 'INSERT INTO users (user_name, gmail, user_password) VALUES ("' . $user_name . '", "' . $email . '", "' . $hashedPassword . '");';
                                         $result = $conn->query($sql);
-                                        header('Location: https://www.google.com/');
+                                        header('Location: ./auth.php');
                                         exit();
                                     }
                                 }
