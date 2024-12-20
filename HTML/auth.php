@@ -58,7 +58,7 @@
                             if (
                                 !(preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[*!@#?\-_$£]).{8,20}+$/', $password))
                             ) {
-                                echo "The user name should only include [a-zA-Z0-9!@#?-_\$£] and got at least 8 caracters and maximum of 20 caracters";
+                                echo "The password should only include [a-zA-Z0-9!@#?-_\$£] and got at least 8 caracters and maximum of 20 caracters";
                                 signUpForm($user_name, $GLOBALS['email'], $password);
                             } else {
                                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);

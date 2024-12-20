@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (e.querySelector("svg path").style.fill === "rgb(0, 123, 255)") {
                     e.querySelector("svg path").style.fill = "rgb(85, 85, 85)";
-                    // e.querySelector("h6").innerHTML = Number(e.querySelector("h6").innerHTML) - 1;
+                    e.querySelector("h6").innerHTML = Number(e.querySelector("h6").innerHTML) - 1;
                     updateLikes(articleId, false);
                 } else {
                     e.querySelector("svg path").style.fill = "rgb(0, 123, 255)";
-                    // e.querySelector("h6").innerHTML = Number(e.querySelector("h6").innerHTML) + 1;
+                    e.querySelector("h6").innerHTML = Number(e.querySelector("h6").innerHTML) + 1;
                     updateLikes(articleId, true);
                 }
             })

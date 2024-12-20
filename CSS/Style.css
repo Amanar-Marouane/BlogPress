@@ -743,3 +743,7 @@ li {
     background-color: #2b145a;
     transform: scale(0.95);
 }
+
+.actions a {
+    color: #fff;
+}
