@@ -16,12 +16,25 @@
             if (!isset($_SESSION['loged_user_id'])) {
                 header('Location: ./auth.php');
             }
-            $conn = new mysqli("localhost", "root", "analikayn", "blogpress");
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
+            $GLOBALS['conn'] = new mysqli("localhost", "root", "analikayn", "blogpress");
+            if ($GLOBALS['conn']->connect_error) {
+                die("Connection failed: " . $GLOBALS['conn']->connect_error);
             }
-
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_GET['article_id'])) {
+                $sql = "SELECT * FROM articles WHERE article_id = {$_GET['article_id']};";
+                $modify = $GLOBALS['conn']->query($sql);
+                if ($modify->num_rows  > 0) {
+                    $row = $modify->fetch_assoc();
+                    $TITLE = $row['title'];
+                    $Desc = $row['arti_desc'];
+                    $URL = $row['arti_img'];
+                    articleSubmit(false);
+                }
+            } else {
+                articleSubmit(true);
+            }
+            function articleSubmit($bool)
+            {
                 if (isset($_POST["post_submit"])) {
                     if (! (empty($_POST['title']) || empty($_POST['description']) || empty($_POST['image']))) {
                         $title = $_POST['title'];
@@ -37,8 +50,15 @@
                                     echo "Invalid URL format!";
                                 } else {
                                     $authorId = (int)$_SESSION['loged_user_id'];
-                                    $sql = "INSERT INTO articles (author_id, title, arti_desc, arti_img) VALUES('$authorId', '$title', '$description', '$image');";
-                                    $result = $conn->query($sql);
+                                    if ($bool) {
+                                        $sql = "INSERT INTO articles (author_id, title, arti_desc, arti_img) 
+                                                VALUES('$authorId', '$title', '$description', '$image');";
+                                    } else {
+                                        $articleId = (int) $_GET['article_id'];
+                                        $sql = "UPDATE articles SET title = '$title', arti_desc = '$description', arti_img = '$image' 
+                                                WHERE article_id = $articleId;";
+                                    }
+                                    $result = $GLOBALS['conn']->query($sql);
                                     if (!$result) {
                                         echo "Something went wrong Try again";
                                     } else {
@@ -56,18 +76,22 @@
     <main>
         <section class="create-article">
             <h1>Create/Modify a New Article</h1>
-            <form action="./create_arti.php" method="POST" class="article-form">
+            <form action="<?php if (isset($_GET['article_id'])) echo "./create_arti.php?article_id={$_GET['article_id']}";
+                            else echo "./create_arti.php"; ?>" method="POST" class="article-form">
                 <div class="form-group">
                     <label for="title">Article Title</label>
-                    <input type="text" id="title" value="<?php echo htmlspecialchars($title ?? ""); ?>" name="title" placeholder="Enter your article title" required>
+                    <input type="text" id="title" value="<?php if (isset($_GET['article_id'])) echo htmlspecialchars($TITLE);
+                                                            else echo htmlspecialchars($title ?? ""); ?>" name="title" placeholder="Enter your article title" required>
                 </div>
                 <div class="form-group">
                     <label for="description">Article Description</label>
-                    <textarea id="description" name="description" rows="5" placeholder="Write your article description here"><?php echo htmlspecialchars($description ?? ""); ?></textarea>
+                    <textarea id="description" name="description" rows="5" placeholder="Write your article description here"><?php if (isset($_GET['article_id'])) echo htmlspecialchars($Desc);
+                                                                                                                                else echo htmlspecialchars($description ?? ""); ?></textarea>
                 </div>
                 <div class="form-group">
                     <label for="image">Image URL</label>
-                    <input type="url" id="image" value="<?php echo htmlspecialchars($image ?? ""); ?>" name="image" placeholder="https://example.com/image.jpg">
+                    <input type="url" id="image" value="<?php if (isset($_GET['article_id'])) echo htmlspecialchars($URL);
+                                                        else echo htmlspecialchars($image ?? ""); ?>" name="image" placeholder="https://example.com/image.jpg">
                 </div>
                 <div class="form-group">
                     <button type="submit" name="post_submit" class="btn">Submit Article</button>

@@ -26,6 +26,7 @@ if ($conn->connect_error) {
             <li><a href="./dashboard.php">Dashboard</a></li>
             <li><a href="./home.php">Home</a></li>
             <li><a href="./create_arti.php">Create</a></li>
+            <li><a href="#">Comments</a></li>
         </ul>
     </nav>
 
@@ -52,6 +53,8 @@ if ($conn->connect_error) {
                 if ($result->num_rows > 0) {
                     $total_posts = $result->fetch_assoc();
                     $GLOBALS['total_posts'] = $total_posts['total_posts'];
+                } else {
+                    $GLOBALS['total_posts'] = 0;
                 }
                 ?>
                 <h3>Total Comments</h3>
@@ -70,9 +73,17 @@ if ($conn->connect_error) {
         <div class="arties">
             <h3>Your Posts</h3>
             <?php
-            $sql = "SELECT * FROM articles WHERE author_id = {$_SESSION['loged_user_id']};";
+            $sql = "SELECT a.*, 
+                   COALESCE(c.comment_count, 0) AS comment_count 
+            FROM articles a
+            LEFT JOIN (
+                SELECT article_id, COUNT(*) AS comment_count 
+                FROM comments 
+                GROUP BY article_id
+            ) c ON a.article_id = c.article_id
+            WHERE a.author_id = {$_SESSION['loged_user_id']};";
+
             $res = $conn->query($sql);
-            $i = 0;
             if ($res->num_rows > 0) {
                 while ($row = $res->fetch_assoc()) {
                     $title = $row['title'];
@@ -82,33 +93,24 @@ if ($conn->connect_error) {
                     $views_number = $row['views_number'];
                     $likes_number = $row['likes_number'];
                     $article_id = $row['article_id'];
-                    $sql = "SELECT COUNT(*) AS the_number FROM comments JOIN articles ON articles.article_id = comments.article_id JOIN users ON users.user_id = articles.author_id WHERE users.user_id = {$_SESSION['loged_user_id']} GROUP BY articles.article_id;";
-                    $result = $conn->query($sql);
-                    $GLOBALS['the_number'] = [];
-                    if ($result->num_rows > 0) {
-                        while ($ro = $result->fetch_assoc()) {
-                            array_push($GLOBALS['the_number'], $ro['the_number']);
-                        }
-                    } else {
-                        $GLOBALS['the_number'] = 0;
-                    }
+                    $comment_count = $row['comment_count'];
+
                     echo "<div class='arti'>
-                                <a href='./article_page.php?article_id=$article_id'>
-                                    <h4>$title</h4>
-                                    <p>$desc</p>
-                                    <img src='$img' alt='Post's Img'>
-                                </a>
-                                <div class='post-stats'>
-                                    <p>Views: $views_number</p>
-                                    <p>Likes: $likes_number</p>
-                                    <p>Comments: {$GLOBALS['the_number'][$i]}</p>
-                                </div>
-                                <div class='actions'>
-                                    <button class='btn'>Modify</button>
-                                    <button class='btn'><a href='./delete.php?article_id=$article_id'>Delete</a></button>
-                                </div>
-                            </div>";
-                    $i++;
+                      <a href='./article_page.php?article_id=$article_id'>
+                          <h4>$title</h4>
+                          <p>$desc</p>
+                          <img src='$img' alt='Post's Img'>
+                      </a>
+                      <div class='post-stats'>
+                          <p>Views: $views_number</p>
+                          <p>Likes: $likes_number</p>
+                          <p>Comments: $comment_count</p>
+                      </div>
+                      <div class='actions'>
+                          <button class='btn'><a href='./create_arti.php?article_id=$article_id'>Modify</a></button>
+                          <button class='btn'><a href='./delete.php?article_id=$article_id'>Delete</a></button>
+                      </div>
+                  </div>";
                 }
             }
             ?>
