@@ -130,7 +130,7 @@ if ($result->num_rows > 0) {
                         ?>
                     </div>
                     <p class="no-comments co">No comments yet. Be the first to comment!</p>
-                    <h2 class="com_header">Give Us Your Openion</h2>
+                    <h2 class="com_header">Give Us Your Opinion</h2>
                     <form class="add-comment" action="article_page.php" method="POST">
                         <input type="text" hidden name="article_id" value="<?php echo $article_id; ?>">
                         <input type="text" name="user_name_comment" id="user_name_comment" placeholder="User Name here..." class="user name input">
