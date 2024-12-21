@@ -693,7 +693,6 @@ li {
 
 .articleFormBody {
     color: #333;
-    padding: 2em;
     text-align: center;
 }
 
@@ -750,6 +749,7 @@ li {
 
 .comments-container {
     padding: 20px;
+    min-height: 75vh;
 }
 
 h2 {
@@ -813,4 +813,16 @@ tbody tr:hover {
 
 .delete-btn:hover {
     background-color: #a71d2a;
+}
+
+canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.card {
+    background-color: darkslategray;
+    padding: 1.5em;
+    margin: 1em;
+    border-radius: 10px;
 }

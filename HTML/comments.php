@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION['loged_user_id'])) {
     header('Location: ./auth.php');
 }
+include_once './header.php';
 $conn = new mysqli("localhost", "root", "analikayn", "blogpress");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -18,8 +19,7 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="./../CSS/Style.css">
 </head>
 
-<body>
-
+<body class="HomeBody">
     <div class="comments-container">
         <h2>Your Comments</h2>
         <table>
@@ -67,5 +67,6 @@ if ($conn->connect_error) {
 
 </html>
 <?php
+include_once './footer.php';
 exit();
 ?>

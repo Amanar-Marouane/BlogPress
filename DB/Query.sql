@@ -1,4 +1,5 @@
-/*DROP DATABASE IF EXISTS blogpress;
+/*
+DROP DATABASE IF EXISTS blogpress;
 CREATE DATABASE blogpress;
 USE blogpress;
 
@@ -7,32 +8,34 @@ user_id INT PRIMARY KEY AUTO_INCREMENT,
 user_name VARCHAR(20) NOT NULL,
 gmail VARCHAR(50),
 user_password VARCHAR(72),
-creation_date DATETIME
+creation_date DATETIME DEFAULT CURRENT_TIMESTAMP()
 );
 
 CREATE TABLE articles(
 article_id INT PRIMARY KEY AUTO_INCREMENT,
 author_id INT,
-FOREIGN KEY(author_id) REFERENCES users(user_id),
+FOREIGN KEY(author_id) REFERENCES users(user_id) ON DELETE CASCADE,
 title VARCHAR(50) NOT NULL,
 arti_desc TEXT NOT NULL,
 arti_img TEXT NOT NULL,
-created_at DATETIME,
-views_number INT NOT NULL,
-likes_number INT NOT NULL
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP(),
+views_number INT DEFAULT 0,
+likes_number INT DEFAULT 0
 );
 
 CREATE TABLE comments(
+comment_id INT PRIMARY KEY AUTO_INCREMENT,
 article_id INT,
-FOREIGN KEY(article_id) REFERENCES articles(article_id),
+FOREIGN KEY(article_id) REFERENCES articles(article_id) ON DELETE CASCADE,
 user_id INT,
-FOREIGN KEY(user_id) REFERENCES users(user_id),
+FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE,
 user_name VARCHAR(20) NOT NULL,
 comment_desc VARCHAR(256) NOT NULL,
-created_at DATETIME
-);*/
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP()
+);
 
-/*INSERT INTO users (user_name, gmail, user_password, creation_date)
+
+INSERT INTO users (user_name, gmail, user_password, creation_date)
 VALUES
 ('Alice', 'alice@example.com', 'password123', '2024-12-01 09:00:00'),
 ('Bob', 'bob@example.com', 'securepass456', '2024-12-02 10:15:00'),
@@ -58,10 +61,6 @@ VALUES
 (5, 1, 'Alice', 'PHP still has its place in modern development.', '2024-12-05 10:00:00');
 */
 
-
-
-
-
+SELECT * FROM comments;
 SELECT * FROM users;
 SELECT * FROM articles;
-SELECT * FROM comments;

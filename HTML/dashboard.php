@@ -23,10 +23,9 @@ if ($conn->connect_error) {
 
     <nav class="dashboardNav">
         <ul>
-            <li><a href="./dashboard.php">Dashboard</a></li>
             <li><a href="./home.php">Home</a></li>
             <li><a href="./create_arti.php">Create</a></li>
-            <li><a href="#">Comments</a></li>
+            <li><a href="./comments.php">Comments</a></li>
         </ul>
     </nav>
 
@@ -69,7 +68,56 @@ if ($conn->connect_error) {
                 <p id="total-posts"><?php echo $GLOBALS['total_posts']; ?></p>
             </div>
         </div>
-
+        <div class="container">
+            <div class="card">
+                <h3>Chart</h3>
+                <canvas id="line" width="200" height="100"></canvas>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const lineChart = document.getElementById("line").getContext('2d');
+            const labels = ["Janvier", "FÃ©vrier", "Mars"];
+            const data = {
+                labels: labels,
+                datasets: [{
+                    label: "hajar",
+                    data: [20, 10, 30, 0],
+                    backgroundColor: "rgba(255, 255, 255, 0.5)",
+                    borderColor: "#fff",
+                    borderWidth: 2,
+                    fill: true
+                }]
+            };
+            const config = {
+                type: "line",
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: "white"
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: "white"
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: "white"
+                            }
+                        }
+                    }
+                }
+            };
+            new Chart(lineChart, config);
+        </script>
         <div class="arties">
             <h3>Your Posts</h3>
             <?php

@@ -1,3 +1,4 @@
+<?php include_once './header.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,13 +9,13 @@
     <link rel="stylesheet" href="./../CSS/Style.css">
 </head>
 
-<body class="articleFormBody">
+<body class="articleFormBody HomeBody">
     <section class="error">
         <h3 class="errorMsg">
             <?php
             session_start();
             if (!isset($_SESSION['loged_user_id'])) {
-                header('Location: ./auth.php');
+                header('Location: ./home.php');
             }
             $GLOBALS['conn'] = new mysqli("localhost", "root", "analikayn", "blogpress");
             if ($GLOBALS['conn']->connect_error) {
@@ -103,5 +104,6 @@
 
 </html>
 <?php
+include_once './footer.php';
 exit();
 ?>
