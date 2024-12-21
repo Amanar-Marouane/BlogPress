@@ -71,52 +71,105 @@ if ($conn->connect_error) {
         <div class="container">
             <div class="card">
                 <h3>Chart</h3>
-                <canvas id="line" width="200" height="100"></canvas>
+                <canvas id="line1" width="200px" height="100px"></canvas>
+            </div>
+            <div class="card">
+                <h3>Chart</h3>
+                <canvas id="line2" width="200px" height="100px"></canvas>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const lineChart = document.getElementById("line").getContext('2d');
-            const labels = ["Janvier", "FÃ©vrier", "Mars"];
-            const data = {
-                labels: labels,
-                datasets: [{
-                    label: "hajar",
-                    data: [20, 10, 30, 0],
-                    backgroundColor: "rgba(255, 255, 255, 0.5)",
-                    borderColor: "#fff",
-                    borderWidth: 2,
-                    fill: true
-                }]
-            };
-            const config = {
-                type: "line",
-                data: data,
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            labels: {
-                                color: "white"
+            fetch("./chart.php")
+                .then(response => response.json())
+                .then(infos => {
+                    let titles = infos.map(item => item.title)
+                    let views = infos.map(item => item.views_number)
+                    let likes = infos.map(item => item.likes_number)
+
+                    const lineChart1 = document.getElementById("line1").getContext('2d');
+                    const lineChart2 = document.getElementById("line2").getContext('2d');
+                    const label1 = titles;
+                    const views_char = {
+                        labels: label1,
+                        datasets: [{
+                            label: "Views",
+                            data: views,
+                            backgroundColor: "rgba(255, 255, 255, 0.5)",
+                            borderColor: "#fff",
+                            borderWidth: 2,
+                            fill: true
+                        }]
+                    };
+                    const config1 = {
+                        type: "line",
+                        data: views_char,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    labels: {
+                                        color: "white"
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        color: "white"
+                                    }
+                                },
+                                y: {
+                                    ticks: {
+                                        color: "white"
+                                    }
+                                }
                             }
                         }
-                    },
-                    scales: {
-                        x: {
-                            ticks: {
-                                color: "white"
-                            }
-                        },
-                        y: {
-                            ticks: {
-                                color: "white"
+                    };
+                    const label2 = titles;
+                    const likes_char = {
+                        labels: label2,
+                        datasets: [{
+                            label: "Likes",
+                            data: likes,
+                            backgroundColor: "rgba(255, 255, 255, 0.5)",
+                            borderColor: "#fff",
+                            borderWidth: 2,
+                            fill: true
+                        }]
+                    };
+                    const config2 = {
+                        type: "line",
+                        data: likes_char,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    labels: {
+                                        color: "white"
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        color: "white"
+                                    }
+                                },
+                                y: {
+                                    ticks: {
+                                        color: "white"
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-            };
-            new Chart(lineChart, config);
+                    };
+                    new Chart(lineChart1, config1);
+                    new Chart(lineChart2, config2);
+                })
         </script>
         <div class="arties">
             <h3>Your Posts</h3>

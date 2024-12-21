@@ -12,6 +12,8 @@
 session_start();
 if (isset($_SESSION['loged_user_id'])) {
     include_once './header.php';
+} else {
+    include_once './headerForVisitor.php';
 }
 
 ?>

@@ -815,6 +815,12 @@ tbody tr:hover {
     background-color: #a71d2a;
 }
 
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 canvas {
     display: block;
     max-width: 100%;
@@ -825,4 +831,6 @@ canvas {
     padding: 1.5em;
     margin: 1em;
     border-radius: 10px;
+    width: 500px;
+    height: 300px;
 }
